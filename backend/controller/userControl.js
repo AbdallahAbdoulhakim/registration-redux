@@ -127,12 +127,10 @@ export const checkAvailable = expressAsyncHandler(async (req, res, next) => {
     const foundEmail = await userModel.findOne(obj);
 
     if (foundEmail) {
-      res.status(409).json({
-        success: false,
-        message: `${Object.keys(obj)[0]} \(${
-          Object.values(obj)[0]
-        }\) already exist!`,
-      });
+      res.status(409);
+      throw new Error(
+        `${Object.keys(obj)[0]} \(${Object.values(obj)[0]}\) already exist!`
+      );
     }
 
     res.sendStatus(204);

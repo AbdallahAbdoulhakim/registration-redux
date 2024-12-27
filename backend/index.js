@@ -8,13 +8,14 @@ import { createWriteStream } from "fs";
 import morgan from "morgan";
 
 import authRouter from "./routes/authRoutes.js";
+import userRouter from "./routes/userRoutes.js";
 
 dotenv.config();
 
 const logWs = createWriteStream("./logs/access.log");
 
 const PORT = process.env.PORT || 5500;
-const SERVER_URL = process.env.IP_ADDRESS || 5500;
+const SERVER_URL = process.env.SERVER_URL || 5500;
 
 const app = express();
 
@@ -30,11 +31,12 @@ app.get("/", (req, res) => {
   res.status(200).json({ success: true, message: "Welcome to the API Server" });
 });
 
-app.use("/api/user/", authRouter);
+app.use(authRouter);
+app.use("/api/user", userRouter);
 
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(PORT, IP_ADDRESS, () => {
+app.listen(PORT, SERVER_URL, () => {
   console.log(`Server is up at ${SERVER_URL} and listening on PORT ${PORT}`);
 });
