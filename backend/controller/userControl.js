@@ -99,7 +99,7 @@ export const loginUser = expressAsyncHandler(async (req, res, next) => {
           roles: foundUser.roles,
         },
       },
-      process.env.REFRESH_TOKEN_SECRET,
+      process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "1h" }
     );
 
